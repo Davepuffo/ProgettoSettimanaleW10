@@ -1,0 +1,1 @@
+# ProgettoSettimanaleW10
