@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import { Card } from 'react-bootstrap'
 
 
 const SearchBar = () => {
@@ -17,7 +18,7 @@ const SearchBar = () => {
         e.preventDefault()
 
         try {
-            const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?q=' + query + '&appid=66365a4caede04f233873d1adcdbe9f5'
+            const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?q=' + query + '&cnt=5&appid=66365a4caede04f233873d1adcdbe9f5'
             )
             if (response.ok) {
                 const data = await response.json()
@@ -41,16 +42,25 @@ const SearchBar = () => {
                             type="search"
                             value={query}
                             onChange={handleChange}
-                            placeholder="Cerca il meteo della località che preferisci e premi 'ENTER'"
+                            placeholder="Search the weather for the location you prefer and press 'ENTER'"
                         />
                     </Form>
                 </Col>
                 <Col xs={10} className="mx-auto mb-5">
-                    <ul>
-                        {city.map((cityData) => (
-                            <li key={cityData.dt}>{cityData.weather[0].main} - Temp Max: {cityData.main.temp_max}°F - Temp Min: {cityData.main.temp_min}°F - Humidity: {cityData.main.humidity}%</li>
-                        ))}
-                    </ul>
+                    <h2></h2>
+                    {city.map((cityData) => (
+                        <Card className='my-4'>
+                            <Card.Body>
+                                <Card.Title>{city.name}</Card.Title>
+                                <Card.Text>
+                                    <p>Weather: {cityData.weather[0].main}</p>
+                                    <p>Temp Max: {cityData.main.temp_max}°F</p>
+                                    <p>Temp Min: {cityData.main.temp_min}°F</p>
+                                    <p>Humidity: {cityData.main.humidity}%</p>
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    ))}
                 </Col>
             </Row>
         </Container>

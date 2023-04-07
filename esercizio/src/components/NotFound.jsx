@@ -6,8 +6,8 @@ const NotFound = () => {
     const navigate = useNavigate()
     return (
         <Container>
-            <h2>Attenzione!! Città non trovata, si prega di effettuare un'altra ricerca</h2>
-            <Button onClick={() => { navigate('/') }}>TORNA ALLA HOME</Button>
+            <h2>Attention!!! Page not found, please search again</h2>
+            <Button onClick={() => { navigate('/') }}>RETURN TO HOME</Button>
         </Container>
     )
 }

@@ -9,7 +9,8 @@ import { Link } from 'react-router-dom';
 
 
 const CardCity = ({ query }) => {
-    const [city, setCity] = useState([])
+    const [city, setCity] = useState(null)
+    const [icon, setIcon] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
 
@@ -22,6 +23,8 @@ const CardCity = ({ query }) => {
                 .then((data) => {
                     console.log(data)
                     setCity(data)
+                    setIcon('http://openweathermap.org/img/w/' + data.weather[0].icon + '.png')
+                    console.log(icon)
                     setIsLoading(false)
                 })
                 .catch(() => {
@@ -45,18 +48,19 @@ const CardCity = ({ query }) => {
                     </Spinner>
                 </div>
             )}
-            <Card className='my-4'>
-                <Card.Body>
-                    <Card.Title>{city.name}</Card.Title>
-                    <Card.Text>
-                        {/* <p>Weather: {city.weather[0].main}</p>
-                        <p>Temp Max: {city.main.temp_max}°F</p>
-                        <p>Temp Min: {city.main.temp_min}°F</p>
-                        <p>Humidity: {city.main.humidity}%</p> */}
-                    </Card.Text>
-                    <Link to={"/details/" + `${city.name}`}>Scopri di più!</Link>
-                </Card.Body>
-            </Card>
+            {city &&
+                <Card className='my-4'>
+                    <Card.Body>
+                        <Card.Title>{city.name}</Card.Title>
+                        <Card.Text>
+                            <img src={icon} alt="" />
+                            <p>Temp Max: {city.main.temp_max}°F</p>
+                            <p>Temp Min: {city.main.temp_min}°F</p>
+                            <p>Humidity: {city.main.humidity}%</p>
+                        </Card.Text>
+                        <Link to={"/details/" + `${city.name}`}>Scopri di più!</Link>
+                    </Card.Body>
+                </Card>}
         </Col>
 
     )
